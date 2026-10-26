@@ -11,37 +11,42 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<style>html{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}</style>
 <title>Chit Organizer</title>
 <style>
-/* Layout: fixed navy sidebar (top tab strip on phones) beside a card-based workspace; data tables scroll inside their own wrappers. */
-:root{--ink:#172033;--muted:#667085;--line:#e5e9f0;--bg:#f5f7fb;--card:#fff;--brand:#2448a5;--onbrand:#fff;--green:#137a50;--red:#b42318;--amber:#9a6700;--soft:#eef2f7;--th:#f9fafc;--field:#d4dae5;--fieldbg:#fff;--side:#101b35;--sidetxt:#c8d2e8;--sidehover:#26375d;--okbg:#e7f6ee;--warnbg:#fff4d6;--badbg:#ffebe9;--dangerbg:#fff0ee;--noticebg:#fff8e6;--noticeline:#f1d58a;--noticetxt:#704e00;--logobg:#dfe8ff;--scrim:rgba(10,15,30,.5)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e6eaf4;--muted:#9aa5bd;--line:#2a3550;--bg:#0c1220;--card:#141c30;--brand:#4a74e0;--green:#4cc38a;--red:#ff8a7d;--amber:#e8b64a;--soft:#223049;--th:#19233a;--field:#34415f;--fieldbg:#0f1729;--side:#080d19;--sidetxt:#aab8dc;--sidehover:#1d2a4a;--okbg:#12362a;--warnbg:#3a2f10;--badbg:#401c19;--dangerbg:#3a1f1c;--noticebg:#33290f;--noticeline:#6b5617;--noticetxt:#f0d68a;--logobg:#20305a;--scrim:rgba(0,0,0,.6);color-scheme:dark}}
-:root[data-theme="dark"]{--ink:#e6eaf4;--muted:#9aa5bd;--line:#2a3550;--bg:#0c1220;--card:#141c30;--brand:#4a74e0;--green:#4cc38a;--red:#ff8a7d;--amber:#e8b64a;--soft:#223049;--th:#19233a;--field:#34415f;--fieldbg:#0f1729;--side:#080d19;--sidetxt:#aab8dc;--sidehover:#1d2a4a;--okbg:#12362a;--warnbg:#3a2f10;--badbg:#401c19;--dangerbg:#3a1f1c;--noticebg:#33290f;--noticeline:#6b5617;--noticetxt:#f0d68a;--logobg:#20305a;--scrim:rgba(0,0,0,.6);color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Telugu","Nirmala UI",sans-serif}
+/* Layout: sidebar + workspace on desktop; sticky header, bottom tab bar and card lists on phones. One-tap "Mark paid" lists are the core flow. */
+:root{--ink:#172033;--muted:#667085;--line:#e5e9f0;--bg:#f4f6fb;--card:#fff;--brand:#2448a5;--onbrand:#fff;--green:#137a50;--red:#b42318;--amber:#9a6700;--soft:#eef2f7;--th:#f9fafc;--field:#d4dae5;--fieldbg:#fff;--side:#101b35;--sidetxt:#c8d2e8;--sidehover:#26375d;--okbg:#e7f6ee;--warnbg:#fff4d6;--badbg:#ffebe9;--dangerbg:#fff0ee;--noticebg:#fff8e6;--noticeline:#f1d58a;--noticetxt:#704e00;--logobg:#dfe8ff;--scrim:rgba(10,15,30,.5);--hero1:#2448a5;--hero2:#3f6fe6;--shadow:0 1px 2px rgba(16,24,40,.05),0 4px 14px rgba(16,24,40,.06);--bar:rgba(244,246,251,.85);--tab:#fff;--track:#e3e8f2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e6eaf4;--muted:#9aa5bd;--line:#2a3550;--bg:#0c1220;--card:#141c30;--brand:#5b84ee;--green:#4cc38a;--red:#ff8a7d;--amber:#e8b64a;--soft:#223049;--th:#19233a;--field:#34415f;--fieldbg:#0f1729;--side:#080d19;--sidetxt:#aab8dc;--sidehover:#1d2a4a;--okbg:#12362a;--warnbg:#3a2f10;--badbg:#401c19;--dangerbg:#3a1f1c;--noticebg:#33290f;--noticeline:#6b5617;--noticetxt:#f0d68a;--logobg:#20305a;--scrim:rgba(0,0,0,.6);--hero1:#1c3a8f;--hero2:#2f58c9;--shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);--bar:rgba(12,18,32,.85);--tab:#111829;--track:#26324d;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e6eaf4;--muted:#9aa5bd;--line:#2a3550;--bg:#0c1220;--card:#141c30;--brand:#5b84ee;--green:#4cc38a;--red:#ff8a7d;--amber:#e8b64a;--soft:#223049;--th:#19233a;--field:#34415f;--fieldbg:#0f1729;--side:#080d19;--sidetxt:#aab8dc;--sidehover:#1d2a4a;--okbg:#12362a;--warnbg:#3a2f10;--badbg:#401c19;--dangerbg:#3a1f1c;--noticebg:#33290f;--noticeline:#6b5617;--noticetxt:#f0d68a;--logobg:#20305a;--scrim:rgba(0,0,0,.6);--hero1:#1c3a8f;--hero2:#2f58c9;--shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);--bar:rgba(12,18,32,.85);--tab:#111829;--track:#26324d;color-scheme:dark}
+html{padding:env(safe-area-inset-top,0px) 0 0;-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Telugu","Nirmala UI",sans-serif}
 button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0;border-radius:10px;padding:10px 14px;background:var(--brand);color:var(--onbrand);font-weight:650}
+button{cursor:pointer;border:0;border-radius:12px;padding:11px 16px;background:var(--brand);color:var(--onbrand);font-weight:650;min-height:44px;transition:transform .12s ease,filter .15s ease,background .15s ease}
+button:active{transform:scale(.97)}
+button:hover{filter:brightness(1.06)}
 button.secondary{background:var(--soft);color:var(--ink)}
 button.danger{background:var(--dangerbg);color:var(--red)}
-button.small{padding:6px 9px;font-size:12px}
+button.small{padding:7px 12px;font-size:13px;min-height:36px;border-radius:10px}
+button.ghost{background:transparent;color:var(--brand);padding:8px 10px;min-height:36px}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
-.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
-.side{background:var(--side);color:#fff;padding:22px 16px}
-.brand{font-size:18px;font-weight:800;padding:0 10px 22px}
-.brand small{display:block;color:var(--sidetxt);font-size:12px;font-weight:500;margin-top:4px}
+.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+.side{background:var(--side);color:#fff;padding:22px 16px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{font-size:18px;font-weight:800;padding:0 10px 22px;display:flex;flex-direction:column}
+.brand small{color:var(--sidetxt);font-size:12px;font-weight:500;margin-top:4px}
+.brand .row{display:flex;align-items:center}
 .nav{display:grid;gap:6px}
-.nav button{background:transparent;color:var(--sidetxt);text-align:left;font-weight:600}
-.nav button.active,.nav button:hover{background:var(--sidehover);color:#fff}
+.nav button{background:transparent;color:var(--sidetxt);text-align:left;font-weight:600;display:flex;align-items:center;gap:12px}
+.nav button.active,.nav button:hover{background:var(--sidehover);color:#fff;filter:none}
+.nav svg{width:20px;height:20px;flex:none}
 .side-note{margin:30px 10px 0;color:var(--sidetxt);font-size:12px}
-.main{padding:25px max(16px,env(safe-area-inset-right,0px)) 25px 25px;min-width:0}
+.main{padding:26px 28px 40px;min-width:0;max-width:1180px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
 .eyebrow{color:var(--brand);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.top h1{font-size:26px;margin:4px 0;text-wrap:balance}
+.top h1{font-size:26px;margin:4px 0;text-wrap:balance;letter-spacing:-.02em}
 .sub{color:var(--muted)}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
-.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;min-width:0}
+.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0;box-shadow:var(--shadow)}
 .stat label{color:var(--muted);font-size:12px}
 .stat strong{display:block;font-size:23px;margin:7px 0 2px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .stat small{color:var(--muted)}
@@ -50,87 +55,190 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .panel h2{font-size:16px;margin:0}
 .panel p{color:var(--muted)}
 .grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
-.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}
+.hero{background:linear-gradient(135deg,var(--hero1),var(--hero2));color:#fff;border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px rgba(36,72,165,.25)}
+.hero .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{background:rgba(255,255,255,.18);color:#fff;min-height:36px;width:36px;padding:0;border-radius:10px;font-size:18px}
+.stepper span{font-weight:700;min-width:96px;text-align:center}
+.hero .big{font-size:34px;font-weight:800;letter-spacing:-.03em;margin:14px 0 2px;font-variant-numeric:tabular-nums}
+.hero .of{opacity:.85;font-size:13px}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.25);overflow:hidden;margin:14px 0 10px}
+.bar>i{display:block;height:100%;border-radius:99px;background:#fff;width:0;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.bar.light{background:var(--track);margin:10px 0 0}
+.bar.light>i{background:var(--brand)}
+.hero .meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px;opacity:.95}
+.hero .cta{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.hero .cta button{background:#fff;color:#1c3a8f;flex:1 1 140px}
+.hero .cta button.alt{background:rgba(255,255,255,.18);color:#fff}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
 table{width:100%;border-collapse:collapse;white-space:nowrap;font-variant-numeric:tabular-nums}
-th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line)}
 th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--th)}
 tr:last-child td{border-bottom:0}
-.pill{display:inline-block;border-radius:99px;padding:4px 8px;font-size:11px;font-weight:750}
+.pill{display:inline-block;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:750}
 .ok{background:var(--okbg);color:var(--green)}.warn{background:var(--warnbg);color:var(--amber)}.bad{background:var(--badbg);color:var(--red)}
 .muted{color:var(--muted)}
 .formgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .field{display:grid;gap:5px;min-width:0}
 .field label{font-size:12px;color:var(--muted);font-weight:650}
-.field input,.field select,.field textarea,.toolbar input,.toolbar select,.mbody input,.mbody textarea{width:100%;border:1px solid var(--field);border-radius:9px;padding:10px;background:var(--fieldbg);color:var(--ink)}
+.field input,.field select,.field textarea,.toolbar input,.toolbar select,.mbody input,.mbody textarea,.qm select{width:100%;border:1px solid var(--field);border-radius:12px;padding:11px 12px;background:var(--fieldbg);color:var(--ink);min-height:44px;font-size:16px}
 .field input:disabled{background:var(--soft);color:var(--ink)}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}
-.toolbar input,.toolbar select{width:auto;min-width:0;flex:1 1 160px;padding:9px}
+.toolbar input,.toolbar select{width:auto;min-width:0;flex:1 1 160px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{background:var(--soft);color:var(--ink);border-radius:99px;padding:7px 14px;min-height:36px;font-size:13px}
+.chip.on{background:var(--brand);color:var(--onbrand)}
+.mlist{display:grid;gap:8px}
+.mrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--card);animation:rise .22s ease both}
+.mrow.done{background:var(--okbg);border-color:transparent}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--logobg);color:var(--brand);font-weight:800;font-size:13px;flex:none}
+.mrow.done .avatar{background:var(--green);color:#fff}
+.minfo{min-width:0;flex:1}
+.minfo b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.minfo small{color:var(--muted)}
+.mact{display:flex;gap:6px;align-items:center;flex:none}
+.qm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.qm select{width:auto;flex:1 1 130px}
+details.panel summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:32px}
+details.panel summary::-webkit-details-marker{display:none}
+details.panel summary::after{content:"＋";color:var(--brand);font-size:18px}
+details.panel[open] summary::after{content:"－"}
+details.panel[open] summary{margin-bottom:14px}
 .empty{padding:25px;text-align:center;color:var(--muted)}
 .notice{border-radius:12px;background:var(--noticebg);border:1px solid var(--noticeline);padding:12px;color:var(--noticetxt);margin-bottom:8px}
 .footer{font-size:12px;color:var(--muted);padding:8px 2px}
 .inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.section{display:none}.section.active{display:block}
-.logoMark{display:inline-grid;place-items:center;background:var(--logobg);color:var(--brand);border-radius:10px;width:34px;height:34px;margin-right:8px;font-weight:900}
+.section{display:none}.section.active{display:block;animation:rise .25s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.logoMark{display:inline-grid;place-items:center;background:var(--logobg);color:var(--brand);border-radius:10px;width:34px;height:34px;margin-right:10px;font-weight:900}
 body.en .te{display:none}
-.modal{position:fixed;inset:0;background:var(--scrim);display:grid;place-items:center;padding:16px;z-index:50}
+.tabbar{display:none}
+.modal{position:fixed;inset:0;background:var(--scrim);display:grid;place-items:center;padding:16px;z-index:50;animation:fade .18s ease both}
 .modal[hidden]{display:none}
-.mbox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto;display:grid;gap:12px}
+.mbox{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto;display:grid;gap:12px;animation:pop .22s cubic-bezier(.2,.8,.2,1) both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
 .mbox h3{margin:0;font-size:17px}
 .mbody{display:grid;gap:10px}.mbody p{margin:0}
 .mbody textarea{min-height:180px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace}
 .mactions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:650;z-index:60;max-width:calc(100vw - 32px)}
+.sheet{display:grid;gap:8px}
+.sheet button{text-align:left;display:flex;align-items:center;gap:12px;background:var(--soft);color:var(--ink)}
+.sheet svg{width:20px;height:20px;flex:none}
+.toast{position:fixed;left:0;right:0;margin-inline:auto;width:max-content;bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 10px 10px 18px;border-radius:99px;font-weight:650;z-index:60;max-width:calc(100vw - 32px);display:flex;align-items:center;gap:10px;animation:pop .22s ease both}
 .toast[hidden]{display:none}
-@media(max-width:900px){.app{grid-template-columns:minmax(0,1fr)}.side{padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px))}.brand{padding:4px 8px 12px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:9px 12px}.side-note{display:none}.main{padding:15px max(16px,env(safe-area-inset-right,0px)) 15px max(16px,env(safe-area-inset-left,0px))}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:minmax(0,1fr)}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.top{align-items:flex-start;flex-direction:column}}
-@media(max-width:480px){.stats{gap:8px}.stat{padding:12px}.stat strong{font-size:19px}.top h1{font-size:22px}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.toast button{background:transparent;color:var(--bg);text-decoration:underline;min-height:32px;padding:4px 10px;border-radius:99px}
+@media(max-width:900px){
+.app{grid-template-columns:minmax(0,1fr)}
+.side{display:none}
+.main{padding:0 max(16px,env(safe-area-inset-right,0px)) calc(96px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin:0 calc(-1*max(16px,env(safe-area-inset-left,0px)));padding:12px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));background:var(--bar);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:12px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bar);z-index:30}
+.eyebrow,.sub,.top h1 .te{display:none}
+.top{flex-wrap:nowrap}.top>div:first-child{min-width:0}.actions{flex-wrap:nowrap;flex:none}
+.top h1{font-size:21px;margin:0}
+.actions button{padding:6px 12px;min-height:36px;font-size:13px}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid2{grid-template-columns:minmax(0,1fr)}
+.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:var(--tab);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));z-index:40}
+.tabbar button{background:transparent;color:var(--muted);flex-direction:column;display:flex;align-items:center;gap:2px;padding:6px 2px;font-size:11px;font-weight:650;min-height:52px;border-radius:12px}
+.tabbar button svg{width:22px;height:22px}
+.tabbar button.active{color:var(--brand)}
+.tabbar button.active svg{transform:translateY(-1px)}
+.footer{display:none}
+.modal{align-items:end;padding:0}
+.mbox{border-radius:22px 22px 0 0;width:100%;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));animation:sheetup .26s cubic-bezier(.2,.8,.2,1) both}
+@keyframes sheetup{from{transform:translateY(100%)}to{transform:none}}
+.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:700px){
+table.stack{white-space:normal}
+table.stack thead{display:none}
+table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%}
+.tablewrap:has(table.stack){border:0}
+table.stack tr{border:1px solid var(--line);border-radius:14px;padding:6px 12px;margin-bottom:8px;background:var(--card)}
+table.stack td{border:0;padding:5px 0;display:flex;justify-content:space-between;gap:12px;text-align:right}
+table.stack td::before{content:attr(data-label);color:var(--muted);font-size:12px;text-align:left;flex:none}
+table.stack td.act{justify-content:flex-end;padding-top:8px}
+table.stack td.act::before{display:none}
+table.stack td[colspan]{display:block;text-align:center}
+table.stack td[colspan]::before{display:none}
+.hero .big{font-size:30px}
+}
+@media(max-width:480px){.stat{padding:14px}.stat strong{font-size:20px}.formgrid{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
-
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
+<symbol id="i-rupee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h11M7 10h11M7 5c6 0 6 9 0 9l8 6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14c2.2.6 3.5 2.6 3.5 6"/></symbol>
+<symbol id="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-4-4M20 16H6l4 4"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 013 3v13H8a3 3 0 01-3-3z"/><path d="M5 17a3 3 0 013-3h11"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></symbol>
+<symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+</defs></svg>
 <div class="app">
 <aside class="side">
-<div class="brand"><span class="logoMark">₹</span>Chit Organizer<small>చిట్ నిర్వాహకుడు · Offline-ready</small></div>
+<div class="brand"><div class="row"><span class="logoMark">₹</span>Chit Organizer</div><small>చిట్ నిర్వాహకుడు · Works offline</small></div>
 <nav class="nav" id="nav">
-<button class="active" data-tab="dashboard">▦ &nbsp; Dashboard</button>
-<button data-tab="members">♙ &nbsp; Members<span class="te"> / సభ్యులు</span></button>
-<button data-tab="collections">＋ &nbsp; Collections<span class="te"> / వసూళ్లు</span></button>
-<button data-tab="auctions">⇄ &nbsp; Auctions<span class="te"> / వేలం</span></button>
-<button data-tab="ledger">▤ &nbsp; Member ledger<span class="te"> / ఖాతా</span></button>
-<button data-tab="reports">▥ &nbsp; Reports<span class="te"> / నివేదికలు</span></button>
-<button data-tab="settings">⚙ &nbsp; Chit setup<span class="te"> / వివరాలు</span></button>
+<button class="active" data-tab="dashboard"><svg><use href="#i-home"/></svg>Dashboard</button>
+<button data-tab="collections"><svg><use href="#i-rupee"/></svg><span>Collections<span class="te"> / వసూళ్లు</span></span></button>
+<button data-tab="members"><svg><use href="#i-users"/></svg><span>Members<span class="te"> / సభ్యులు</span></span></button>
+<button data-tab="auctions"><svg><use href="#i-swap"/></svg><span>Auctions<span class="te"> / వేలం</span></span></button>
+<button data-tab="ledger"><svg><use href="#i-book"/></svg><span>Member ledger<span class="te"> / ఖాతా</span></span></button>
+<button data-tab="reports"><svg><use href="#i-chart"/></svg><span>Reports<span class="te"> / నివేదికలు</span></span></button>
+<button data-tab="settings"><svg><use href="#i-gear"/></svg><span>Chit setup<span class="te"> / వివరాలు</span></span></button>
 </nav>
-<div class="side-note">Your data stays in this browser. Copy a backup regularly.</div>
+<div class="side-note">Your data stays on this device. Take a backup regularly.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="eyebrow">Organizer workspace</div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub">A clear view of collections, auctions and member balances.</div></div><div class="actions"><button class="secondary" id="langBtn">English only</button><button class="secondary" id="exportBtn">Backup</button></div></header>
+<header class="top"><div><div class="eyebrow">Organizer workspace</div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub"></div></div><div class="actions"><button class="secondary" id="langBtn">English only</button><button class="secondary" id="exportBtn">Backup</button></div></header>
 
 <section class="section active" id="dashboard">
+<div class="hero">
+<div class="row"><div class="stepper"><button id="heroPrev" aria-label="Previous month">‹</button><span id="heroMonth">Month 1</span><button id="heroNext" aria-label="Next month">›</button></div><span class="pill warn" id="monthStatus">Not started</span></div>
+<div class="big" id="heroCollected">₹0</div>
+<div class="of" id="heroOf">collected of ₹0 expected</div>
+<div class="bar"><i id="heroBar"></i></div>
+<div class="meta"><span id="heroPaid">0 of 40 paid</span><span id="heroLeft">₹0 to collect</span></div>
+<div class="cta"><button onclick="go('collections')">Collect payments</button><button class="alt" onclick="go('auctions')">Auction</button></div>
+</div>
 <div class="stats">
-<div class="stat"><label>Registered members<span class="te"> / సభ్యులు</span></label><strong id="sMembers">40</strong><small id="sMembersSub"></small></div>
-<div class="stat"><label>Expected collections<span class="te"> / రావలసిన వసూళ్లు</span></label><strong id="sExpected"></strong><small id="sExpectedSub"></small></div>
-<div class="stat"><label>Collected so far<span class="te"> / వసూలైన మొత్తం</span></label><strong id="sCollected"></strong><small id="sCollectionSub"></small></div>
-<div class="stat"><label>Paid out<span class="te"> / చెల్లించిన మొత్తం</span></label><strong id="sPaid"></strong><small id="sPaidSub"></small></div>
+<div class="stat"><label>Members<span class="te"> / సభ్యులు</span></label><strong id="sMembers">40</strong><small id="sMembersSub"></small></div>
+<div class="stat"><label>Paid out<span class="te"> / చెల్లించినది</span></label><strong id="sPaid"></strong><small id="sPaidSub"></small></div>
+<div class="stat"><label>Net recorded cash</label><strong id="netCash"></strong><small>Collected minus paid out</small></div>
+<div class="stat"><label>Unpaid dues, all months</label><strong id="dues"></strong><small id="sCollectionSub"></small></div>
 </div>
-<div class="grid2">
-<div class="panel"><div class="panel-head"><h2>Current month<span class="te"> / ప్రస్తుత నెల</span></h2><span class="pill warn" id="monthStatus">Not closed</span></div>
-<div class="formgrid"><div class="field"><label for="currentMonth">Month</label><select id="currentMonth"></select></div><div class="field"><label for="monthRegular">Contribution per member</label><input id="monthRegular" disabled></div><div class="field"><label for="monthExpected">Expected collection</label><input id="monthExpected" disabled></div><div class="field"><label for="paidMembers">Paid members</label><input id="paidMembers" disabled></div></div>
-<div class="inline" style="margin-top:14px"><button onclick="go('collections')">Record collection</button><button class="secondary" onclick="go('auctions')">Update auction</button></div></div>
-<div class="panel"><div class="panel-head"><h2>Reconciliation<span class="te"> / లెక్కల సరిపోలిక</span></h2><span class="pill warn">Review</span></div><p id="reconText"></p><div class="stats" style="grid-template-columns:1fr 1fr;margin:0"><div><label class="muted">Net recorded cash</label><strong id="netCash" style="font-size:20px;display:block"></strong></div><div><label class="muted">Unpaid member dues</label><strong id="dues" style="font-size:20px;display:block"></strong></div></div></div>
-</div>
-<div class="panel"><div class="panel-head"><h2>Monthly overview<span class="te"> / నెలవారీ వివరాలు</span></h2><button class="secondary small" onclick="go('reports')">Full report →</button></div><div class="tablewrap"><table><thead><tr><th>Month</th><th>Expected collection</th><th>Collected</th><th>Auction / recipient</th><th>Recipients</th><th>Total payout</th><th>Status</th></tr></thead><tbody id="overviewRows"></tbody></table></div></div>
-</section>
-
-<section class="section" id="members">
-<div class="panel"><div class="panel-head"><h2>Members<span class="te"> / సభ్యులు</span></h2><button onclick="addMember()">+ Add member</button></div><div class="toolbar"><input id="memberSearch" placeholder="Search name or phone"><select id="memberFilter" aria-label="Filter members"><option value="all">All members</option><option value="paid">Paid this month</option><option value="due">Has dues this month</option></select></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Collected to date</th><th>Due this month</th><th>Action</th></tr></thead><tbody id="memberRows"></tbody></table></div></div>
+<div class="panel"><div class="panel-head"><h2>Still to pay this month</h2><button class="ghost small" onclick="go('collections')">See all →</button></div><div class="mlist" id="dashUnpaid"></div></div>
+<div class="panel"><div class="panel-head"><h2>Monthly overview<span class="te"> / నెలవారీ వివరాలు</span></h2><button class="ghost small" onclick="go('reports')">Full report →</button></div><div class="tablewrap"><table class="stack"><thead><tr><th>Month</th><th>Expected</th><th>Collected</th><th>Auction / recipient</th><th>Recipients</th><th>Total payout</th><th>Status</th></tr></thead><tbody id="overviewRows"></tbody></table></div><p class="muted" id="reconText" style="margin-bottom:0"></p></div>
 </section>
 
 <section class="section" id="collections">
-<div class="panel"><div class="panel-head"><h2>Record a manual collection<span class="te"> / వసూలు నమోదు</span></h2><span class="pill ok">Cash or bank</span></div><div class="formgrid"><div class="field"><label for="collectionMonth">Month</label><select id="collectionMonth"></select></div><div class="field"><label for="collectionMember">Member</label><select id="collectionMember"></select></div><div class="field"><label for="collectionAmount">Amount (₹)</label><input id="collectionAmount" type="number" min="0" step="1" value="6250"></div><div class="field"><label for="collectionMethod">Payment method</label><select id="collectionMethod"><option>Cash</option><option>Bank transfer</option><option>UPI</option><option>Other</option></select></div><div class="field"><label for="collectionDate">Date</label><input id="collectionDate" type="date"></div><div class="field"><label for="collectionRef">Receipt / reference</label><input id="collectionRef" placeholder="Receipt number (optional)"></div><div class="field"><label for="collectionNote">Notes</label><input id="collectionNote" placeholder="Optional"></div></div><div class="inline" style="margin-top:14px"><button onclick="recordCollection()">Save collection</button><button class="secondary" onclick="fillExpected()">Use expected amount</button></div></div>
-<div class="panel"><div class="panel-head"><h2>Collection history<span class="te"> / వసూళ్ల చరిత్ర</span></h2><span class="muted" id="collectionCount"></span></div><div class="toolbar"><select id="collectionHistoryMonth" aria-label="Filter by month"></select><input id="collectionHistorySearch" placeholder="Search member or receipt"></div><div class="tablewrap"><table><thead><tr><th>Date</th><th>Month</th><th>Member</th><th>Amount</th><th>Method</th><th>Reference</th><th>Action</th></tr></thead><tbody id="collectionRows"></tbody></table></div></div>
+<div class="panel">
+<div class="panel-head"><div class="stepper" style="color:var(--ink)"><button id="colPrev" class="secondary" style="color:var(--ink)" aria-label="Previous month">‹</button><span id="colMonthLabel" style="font-weight:700;min-width:110px;text-align:center">Month 1</span><button id="colNext" class="secondary" style="color:var(--ink)" aria-label="Next month">›</button></div><span class="muted" id="colSummary"></span></div>
+<div class="bar light"><i id="colBar"></i></div>
+<div class="qm" style="margin-top:14px"><label class="muted" for="quickMethod">Paid via</label><select id="quickMethod"><option>Cash</option><option>UPI</option><option>Bank transfer</option><option>Other</option></select></div>
+<div class="toolbar"><input id="collectSearch" placeholder="Search member" type="search"></div>
+<div class="chips" id="collectChips"><button class="chip on" data-f="all">All</button><button class="chip" data-f="unpaid">Not paid</button><button class="chip" data-f="paid">Paid</button></div>
+<div class="mlist" id="collectList"></div>
+</div>
+<details class="panel"><summary>Record a custom payment<span class="te"> / వసూలు నమోదు</span></summary><div class="formgrid"><div class="field"><label for="collectionMonth">Month</label><select id="collectionMonth"></select></div><div class="field"><label for="collectionMember">Member</label><select id="collectionMember"></select></div><div class="field"><label for="collectionAmount">Amount (₹)</label><input id="collectionAmount" type="number" inputmode="numeric" min="0" step="1" value="6250"></div><div class="field"><label for="collectionMethod">Payment method</label><select id="collectionMethod"><option>Cash</option><option>Bank transfer</option><option>UPI</option><option>Other</option></select></div><div class="field"><label for="collectionDate">Date</label><input id="collectionDate" type="date"></div><div class="field"><label for="collectionRef">Receipt / reference</label><input id="collectionRef" placeholder="Optional"></div><div class="field"><label for="collectionNote">Notes</label><input id="collectionNote" placeholder="Optional"></div></div><div class="inline" style="margin-top:14px"><button onclick="recordCollection()">Save payment</button><button class="secondary" onclick="fillExpected()">Use expected amount</button></div></details>
+<div class="panel"><div class="panel-head"><h2>Payment history<span class="te"> / వసూళ్ల చరిత్ర</span></h2><span class="muted" id="collectionCount"></span></div><div class="toolbar"><select id="collectionHistoryMonth" aria-label="Filter by month"></select><input id="collectionHistorySearch" placeholder="Search member or receipt" type="search"></div><div class="tablewrap"><table class="stack"><thead><tr><th>Date</th><th>Month</th><th>Member</th><th>Amount</th><th>Method</th><th>Reference</th><th></th></tr></thead><tbody id="collectionRows"></tbody></table></div></div>
+</section>
+
+<section class="section" id="members">
+<div class="panel"><div class="panel-head"><h2>Members<span class="te"> / సభ్యులు</span></h2><button onclick="addMember()">+ Add member</button></div><div class="toolbar"><input id="memberSearch" placeholder="Search name or phone" type="search"><select id="memberFilter" aria-label="Filter members"><option value="all">All members</option><option value="paid">Paid this month</option><option value="due">Has dues this month</option></select></div><div class="mlist" id="memberRows"></div></div>
 </section>
 
 <section class="section" id="auctions">
-<div class="panel"><div class="panel-head"><h2>Monthly auction<span class="te"> / నెలవారీ వేలం</span></h2><span class="pill warn">Enter verified register values</span></div><p>Auction amount is the payout per recipient. Total payout = amount × recipient count. Starter values are illustrative and editable; enter the actual amounts from your register.</p><div class="formgrid"><div class="field"><label for="auctionMonth">Month</label><select id="auctionMonth"></select></div><div class="field"><label for="auctionAmount">Auction amount per recipient (₹)</label><input id="auctionAmount" type="number" min="0" step="1"></div><div class="field"><label for="auctionRecipients">Number of recipients</label><input id="auctionRecipients" type="number" min="0" max="40" step="1" value="0"></div><div class="field"><label for="auctionTotal">Total payout (calculated)</label><input id="auctionTotal" disabled></div><div class="field"><label for="auctionRecipientIds">Recipient member IDs (comma separated)</label><input id="auctionRecipientIds" placeholder="e.g. 1, 5"></div><div class="field"><label for="auctionDate">Payout date</label><input id="auctionDate" type="date"></div><div class="field"><label for="auctionPaid">Paid status</label><select id="auctionPaid"><option value="unpaid">Not yet paid</option><option value="paid">Paid in full</option><option value="partial">Partially paid</option></select></div><div class="field" id="partialField" hidden><label for="auctionPaidAmt">Amount paid so far (₹)</label><input id="auctionPaidAmt" type="number" min="0" step="1" value="0"></div><div class="field"><label for="auctionNote">Notes</label><input id="auctionNote" placeholder="Optional"></div></div><div class="inline" style="margin-top:14px"><button onclick="saveAuction()">Save auction</button><button class="secondary" onclick="clearAuction()">Clear form</button></div></div>
-<div class="panel"><div class="panel-head"><h2>Auction schedule<span class="te"> / వేలం పట్టిక</span></h2></div><div class="tablewrap"><table><thead><tr><th>Month</th><th>Contribution/member</th><th>Expected collection</th><th>Auction/recipient</th><th>Recipients</th><th>Total payout</th><th>Recorded payout</th><th>Status</th><th></th></tr></thead><tbody id="auctionRows"></tbody></table></div></div>
+<div class="panel"><div class="panel-head"><h2>Monthly auction<span class="te"> / నెలవారీ వేలం</span></h2><span class="pill warn">Enter values from your register</span></div><p>Auction amount is the payout per recipient. Total payout = amount × recipients. Starter values are illustrative and editable.</p><div class="formgrid"><div class="field"><label for="auctionMonth">Month</label><select id="auctionMonth"></select></div><div class="field"><label for="auctionAmount">Auction amount per recipient (₹)</label><input id="auctionAmount" type="number" inputmode="numeric" min="0" step="1"></div><div class="field"><label for="auctionRecipients">Number of recipients</label><input id="auctionRecipients" type="number" inputmode="numeric" min="0" max="40" step="1" value="0"></div><div class="field"><label for="auctionTotal">Total payout (calculated)</label><input id="auctionTotal" disabled></div><div class="field"><label for="auctionRecipientIds">Recipient member IDs (comma separated)</label><input id="auctionRecipientIds" placeholder="e.g. 1, 5"></div><div class="field"><label for="auctionDate">Payout date</label><input id="auctionDate" type="date"></div><div class="field"><label for="auctionPaid">Paid status</label><select id="auctionPaid"><option value="unpaid">Not yet paid</option><option value="paid">Paid in full</option><option value="partial">Partially paid</option></select></div><div class="field" id="partialField" hidden><label for="auctionPaidAmt">Amount paid so far (₹)</label><input id="auctionPaidAmt" type="number" inputmode="numeric" min="0" step="1" value="0"></div><div class="field"><label for="auctionNote">Notes</label><input id="auctionNote" placeholder="Optional"></div></div><div class="inline" style="margin-top:14px"><button onclick="saveAuction()">Save auction</button><button class="secondary" onclick="clearAuction()">Clear form</button></div></div>
+<div class="panel"><div class="panel-head"><h2>Auction schedule<span class="te"> / వేలం పట్టిక</span></h2></div><div class="tablewrap"><table class="stack"><thead><tr><th>Month</th><th>Contribution</th><th>Expected</th><th>Auction/recipient</th><th>Recipients</th><th>Total payout</th><th>Recorded payout</th><th>Status</th><th></th></tr></thead><tbody id="auctionRows"></tbody></table></div></div>
 </section>
 
 <section class="section" id="ledger">
@@ -144,26 +252,33 @@ body.en .te{display:none}
 <div class="stat"><label>Scheduled auction payouts</label><strong id="rScheduled"></strong><small>Amount × recipients</small></div>
 <div class="stat"><label>Recorded paid-out</label><strong id="rPaid"></strong><small>Marked paid in auction schedule</small></div>
 </div>
-<div class="panel"><div class="panel-head"><h2>Monthly collection and payout report</h2><button class="secondary" onclick="showCSV()">Copy as CSV</button></div><div class="tablewrap"><table><thead><tr><th>Month</th><th>Contribution/member</th><th>Expected</th><th>Collected</th><th>Collection variance</th><th>Scheduled payout</th><th>Paid out</th><th>Cash flow this month*</th></tr></thead><tbody id="reportRows"></tbody></table></div><p>*Monthly recorded collections less payouts marked paid. This is not a legal or accounting statement.</p></div>
+<div class="panel"><div class="panel-head"><h2>Monthly collection and payout report</h2><button class="secondary" onclick="showCSV()">Copy as CSV</button></div><div class="tablewrap"><table><thead><tr><th>Month</th><th>Contribution/member</th><th>Expected</th><th>Collected</th><th>Variance</th><th>Scheduled payout</th><th>Paid out</th><th>Cash flow*</th></tr></thead><tbody id="reportRows"></tbody></table></div><p>*Monthly recorded collections less payouts marked paid. This is not a legal or accounting statement.</p></div>
 <div class="panel"><div class="panel-head"><h2>Reconciliation checks</h2></div><div id="reconChecks"></div></div>
 </section>
 
 <section class="section" id="settings">
-<div class="panel"><div class="panel-head"><h2>Chit configuration<span class="te"> / చిట్ వివరాలు</span></h2></div><div class="formgrid"><div class="field"><label for="cfgValue">Chit nominal value (₹)</label><input id="cfgValue" type="number"></div><div class="field"><label for="cfgMembers">Number of members</label><input id="cfgMembers" type="number" min="1" max="200"></div><div class="field"><label for="cfgDuration">Duration (months)</label><input id="cfgDuration" type="number" min="1" max="120"></div><div class="field"><label for="cfgRegular">Regular monthly contribution (₹)</label><input id="cfgRegular" type="number"></div><div class="field"><label for="cfgFinal">Final month contribution (₹)</label><input id="cfgFinal" type="number"></div><div class="field"><label for="cfgCurrent">Current month</label><select id="cfgCurrent"></select></div><div class="field"><label for="cfgOrganizer">Organizer name</label><input id="cfgOrganizer" placeholder="Optional"></div></div><div class="inline" style="margin-top:14px"><button onclick="saveSettings()">Save configuration</button><button class="secondary" onclick="resetDemo()">Reset demo data</button></div><p class="muted">Changing member count or duration rebuilds the schedule. Take a backup first. Data is stored in this browser only.</p></div>
-<div class="panel"><h2>Backup &amp; privacy</h2><p>Copy a JSON backup before changing devices or clearing browser data. Nothing is sent to a server, and this is not a multi-device system.</p><div class="inline"><button onclick="showBackup()">Copy backup</button><button onclick="importPaste()" class="secondary">Restore from pasted backup</button><button onclick="$('importFile').click()" class="secondary">Restore from file</button><input id="importFile" type="file" accept=".json,application/json" hidden><button class="danger" onclick="wipeData()">Delete all local data</button></div></div>
+<div class="panel"><div class="panel-head"><h2>Chit configuration<span class="te"> / చిట్ వివరాలు</span></h2></div><div class="formgrid"><div class="field"><label for="cfgValue">Chit nominal value (₹)</label><input id="cfgValue" type="number" inputmode="numeric"></div><div class="field"><label for="cfgMembers">Number of members</label><input id="cfgMembers" type="number" inputmode="numeric" min="1" max="200"></div><div class="field"><label for="cfgDuration">Duration (months)</label><input id="cfgDuration" type="number" inputmode="numeric" min="1" max="120"></div><div class="field"><label for="cfgRegular">Regular monthly contribution (₹)</label><input id="cfgRegular" type="number" inputmode="numeric"></div><div class="field"><label for="cfgFinal">Final month contribution (₹)</label><input id="cfgFinal" type="number" inputmode="numeric"></div><div class="field"><label for="cfgCurrent">Current month</label><select id="cfgCurrent"></select></div><div class="field"><label for="cfgOrganizer">Organizer name</label><input id="cfgOrganizer" placeholder="Optional"></div></div><div class="inline" style="margin-top:14px"><button onclick="saveSettings()">Save configuration</button><button class="secondary" onclick="resetDemo()">Reset demo data</button></div><p class="muted">Changing member count or duration rebuilds the schedule. Take a backup first. Data is stored on this device only.</p></div>
+<div class="panel"><h2>Backup &amp; privacy</h2><p>Copy a JSON backup before changing phones or clearing browser data. Nothing is sent to a server, and data does not sync between devices.</p><div class="inline"><button onclick="showBackup()">Copy backup</button><button onclick="importPaste()" class="secondary">Restore from pasted backup</button><button onclick="$('importFile').click()" class="secondary">Restore from file</button><input id="importFile" type="file" accept=".json,application/json" hidden><button class="danger" onclick="wipeData()">Delete all local data</button></div></div>
 </section>
 <div class="footer">Chit Organizer · Keep receipts and verify figures against the original register. Not a substitute for statutory, legal or accounting advice.</div>
 </main></div>
 
+<nav class="tabbar" id="tabbar" aria-label="Main">
+<button data-tab="dashboard" class="active"><svg><use href="#i-home"/></svg>Home</button>
+<button data-tab="collections"><svg><use href="#i-rupee"/></svg>Collect</button>
+<button data-tab="members"><svg><use href="#i-users"/></svg>Members</button>
+<button data-tab="auctions"><svg><use href="#i-swap"/></svg>Auction</button>
+<button id="moreBtn"><svg><use href="#i-more"/></svg>More</button>
+</nav>
 <div class="modal" id="modal" hidden><div class="mbox" role="dialog" aria-modal="true" aria-labelledby="mTitle"><h3 id="mTitle"></h3><div class="mbody" id="mBody"></div><div class="mactions" id="mActions"></div></div></div>
-<div class="toast" id="toast" hidden></div>
+<div class="toast" id="toast" hidden><span id="toastMsg"></span><button id="toastAct" hidden></button></div>
 
 <script>
 const KEY='chit-organizer-v1';
-const defaultConfig={value:250000,members:40,duration:31,regular:6250,final:5000,current:1,organizer:'',language:'both'};
+const defaultConfig={value:250000,members:40,duration:31,regular:6250,final:5000,current:1,organizer:'',language:'both',lastMethod:'Cash'};
 const printedAmounts=[150000,151250,152500,154000,155500,157000,159000,161000,163000,165000,167500,170000,172500,175000,177500,180000,183250,186250,189250,192500,196000,199500,203500,207500,211500,216000,220500,225000,230000,235000,240000];
 const printedRecipients=[1,2,1,2,1,2,1,2,1,1,2,1,2,1,1,2,1,1,1,2,1,1,1,1,1,2,1,1,1,1,1];
-let state,currentTab='dashboard';
+let state,currentTab='dashboard',colMonth=null,collectFilter='all';
 const $=id=>document.getElementById(id);
 function seed(){let c={...defaultConfig};return {config:c,members:Array.from({length:c.members},(_,i)=>({id:i+1,name:'Member '+String(i+1).padStart(2,'0'),phone:''})),collections:[],auctions:Array.from({length:c.duration},(_,i)=>({month:i+1,amount:printedAmounts[i]||0,recipients:printedRecipients[i]||0,recipientIds:[],date:'',paid:'unpaid',paidAmount:0,note:''})),created:new Date().toISOString()}}
 function load(){try{let d=JSON.parse(localStorage.getItem(KEY));if(d&&d.config&&d.members&&d.auctions&&d.collections)return d}catch(e){}return seed()}
@@ -178,70 +293,94 @@ const memberPaid=(id,m)=>sum(state.collections.filter(x=>x.memberId===id&&x.mont
 const auction=m=>state.auctions.find(x=>x.month===m)||{month:m,amount:0,recipients:0,recipientIds:[],paid:'unpaid',paidAmount:0};
 const payout=m=>Number(auction(m).amount||0)*Number(auction(m).recipients||0);
 const paidOut=m=>{let a=auction(m);return a.paid==='paid'?payout(m):a.paid==='partial'?Math.min(Number(a.paidAmount||0),payout(m)):0};
+const pct=(a,b)=>b>0?Math.max(0,Math.min(100,Math.round(a/b*100))):0;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}render()}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const buzz=()=>{try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}};
 
-/* in-page dialogs and toasts (browser alert/confirm/prompt are unavailable) */
+/* in-page dialogs and toasts */
 let toastTimer;
-function toast(msg){let t=$('toast');t.textContent=msg;t.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.hidden=true,2600)}
+function toast(msg,actLabel,actFn){let t=$('toast'),b=$('toastAct');$('toastMsg').textContent=msg;if(actLabel){b.hidden=false;b.textContent=actLabel;b.onclick=()=>{t.hidden=true;actFn()}}else{b.hidden=true}t.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.hidden=true,actLabel?5000:2600)}
 function closeModal(){$('modal').hidden=true}
-function modal({title,body,actions}){return new Promise(res=>{$('mTitle').textContent=title;$('mBody').innerHTML=body;let box=$('mActions');box.innerHTML='';actions.forEach(a=>{let b=document.createElement('button');b.textContent=a.label;b.className=a.cls||'';b.onclick=()=>{if(a.run){a.run(b);return}let v=a.value?a.value():a.result;closeModal();res(v)};box.appendChild(b)});$('modal').hidden=false;let f=$('mBody').querySelector('input,textarea');if(f)f.focus()})}
+function modal({title,body,actions}){return new Promise(res=>{$('mTitle').textContent=title;$('mBody').innerHTML=body;let box=$('mActions');box.innerHTML='';actions.forEach(a=>{let b=document.createElement('button');b.textContent=a.label;b.className=a.cls||'';b.onclick=()=>{if(a.run){a.run(b);return}let v=a.value?a.value():a.result;closeModal();res(v)};box.appendChild(b)});$('modal').hidden=false;let f=$('mBody').querySelector('input,textarea');if(f&&matchMedia('(pointer:fine)').matches)f.focus()})}
+$('modal').addEventListener('click',e=>{if(e.target===$('modal')){let b=$('mActions').querySelector('.secondary')||$('mActions').lastChild;b&&b.click()}});
 const ask=(msg,ok='Confirm')=>modal({title:'Please confirm',body:`<p>${esc(msg)}</p>`,actions:[{label:'Cancel',cls:'secondary',result:false},{label:ok,result:true}]});
 const info=(title,msg)=>modal({title,body:`<p>${esc(msg)}</p>`,actions:[{label:'OK',result:true}]});
-async function copyText(text,btn){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard')}catch(e){let t=$('fText');if(t){t.focus();t.select()}toast('Select the text and copy it')}}
-function showText(title,text,note){return modal({title,body:`<p class="muted">${esc(note)}</p><textarea id="fText" readonly>${esc(text)}</textarea>`,actions:[{label:'Close',cls:'secondary',result:true},{label:'Copy',run:b=>copyText(text,b)}]})}
+async function copyText(text){try{await navigator.clipboard.writeText(text);toast('Copied to clipboard')}catch(e){let t=$('fText');if(t){t.focus();t.select()}toast('Select the text and copy it')}}
+function showText(title,text,note){return modal({title,body:`<p class="muted">${esc(note)}</p><textarea id="fText" readonly>${esc(text)}</textarea>`,actions:[{label:'Close',cls:'secondary',result:true},{label:'Copy',run:()=>copyText(text)}]})}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('modal').hidden){let b=$('mActions').querySelector('.secondary')||$('mActions').lastChild;b&&b.click()}});
+function openMore(){modal({title:'More',body:`<div class="sheet"><button onclick="closeModal();go('ledger')"><svg><use href="#i-book"/></svg>Member ledger<span class="te"> / ఖాతా</span></button><button onclick="closeModal();go('reports')"><svg><use href="#i-chart"/></svg>Reports<span class="te"> / నివేదికలు</span></button><button onclick="closeModal();go('settings')"><svg><use href="#i-gear"/></svg>Chit setup<span class="te"> / వివరాలు</span></button></div>`,actions:[{label:'Close',cls:'secondary',result:true}]})}
+$('moreBtn').onclick=openMore;
 
 function setOpts(id,html,def){let el=$(id),prev=el.value;el.innerHTML=html;el.value=[...el.options].some(o=>o.value===prev)?prev:String(def)}
 const monthOpts=()=>Array.from({length:state.config.duration},(_,i)=>`<option value="${i+1}">Month ${i+1}</option>`).join('');
-function fillSelects(){let c=state.config;setOpts('currentMonth',monthOpts(),c.current);$('currentMonth').value=c.current;setOpts('cfgCurrent',monthOpts(),c.current);setOpts('collectionMonth',monthOpts(),c.current);setOpts('auctionMonth',monthOpts(),c.current);setOpts('collectionHistoryMonth','<option value="all">All months</option>'+monthOpts(),'all');let mo=state.members.map(m=>`<option value="${m.id}">${m.id} · ${esc(m.name)}</option>`).join('');setOpts('collectionMember',mo,state.members[0]?.id||'');setOpts('ledgerMember',mo,state.members[0]?.id||'');if(!$('collectionDate').value)$('collectionDate').value=today();if(!$('auctionDate').value)$('auctionDate').value=today();if(currentTab!=='settings'||!$('cfgValue').value){$('cfgValue').value=c.value;$('cfgMembers').value=c.members;$('cfgDuration').value=c.duration;$('cfgRegular').value=c.regular;$('cfgFinal').value=c.final;$('cfgOrganizer').value=c.organizer||''}}
+function fillSelects(){let c=state.config;setOpts('cfgCurrent',monthOpts(),c.current);setOpts('collectionMonth',monthOpts(),colMonth);$('collectionMonth').value=colMonth;setOpts('auctionMonth',monthOpts(),c.current);setOpts('collectionHistoryMonth','<option value="all">All months</option>'+monthOpts(),'all');let mo=state.members.map(m=>`<option value="${m.id}">${m.id} · ${esc(m.name)}</option>`).join('');setOpts('collectionMember',mo,state.members[0]?.id||'');setOpts('ledgerMember',mo,state.members[0]?.id||'');$('quickMethod').value=c.lastMethod||'Cash';if(!$('collectionDate').value)$('collectionDate').value=today();if(!$('auctionDate').value)$('auctionDate').value=today();if(currentTab!=='settings'||!$('cfgValue').value){$('cfgValue').value=c.value;$('cfgMembers').value=c.members;$('cfgDuration').value=c.duration;$('cfgRegular').value=c.regular;$('cfgFinal').value=c.final;$('cfgOrganizer').value=c.organizer||''}}
 
-const names={dashboard:['Dashboard','A clear view of collections, auctions and member balances.'],members:['Members<span class="te"> / సభ్యులు</span>','Maintain member details and see payment status.'],collections:['Collections<span class="te"> / వసూళ్లు</span>','Record receipts manually and review payment history.'],auctions:['Auctions<span class="te"> / వేలం</span>','Set payout amounts, recipient counts and payout status.'],ledger:['Member ledger<span class="te"> / ఖాతా</span>','Member-wise dues, receipts and auction payouts.'],reports:['Reports<span class="te"> / నివేదికలు</span>','Collections, payouts and reconciliation.'],settings:['Chit setup<span class="te"> / వివరాలు</span>','Configure this chit and manage backups.']};
-function go(tab){currentTab=tab;document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===tab));document.querySelectorAll('#nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));$('pageTitle').innerHTML=names[tab][0];$('pageSub').textContent=names[tab][1];if(tab==='settings')$('cfgValue').value='';render();window.scrollTo({top:0})}
+const names={dashboard:['Dashboard','A clear view of collections, auctions and member balances.'],members:['Members<span class="te"> / సభ్యులు</span>','Maintain member details and see payment status.'],collections:['Collections<span class="te"> / వసూళ్లు</span>','Record receipts and review payment history.'],auctions:['Auctions<span class="te"> / వేలం</span>','Set payout amounts, recipient counts and payout status.'],ledger:['Member ledger<span class="te"> / ఖాతా</span>','Member-wise dues, receipts and auction payouts.'],reports:['Reports<span class="te"> / నివేదికలు</span>','Collections, payouts and reconciliation.'],settings:['Chit setup<span class="te"> / వివరాలు</span>','Configure this chit and manage backups.']};
+function go(tab){currentTab=tab;document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===tab));document.querySelectorAll('#nav button,#tabbar button[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));$('moreBtn').classList.toggle('active',['ledger','reports','settings'].includes(tab));$('pageTitle').innerHTML=names[tab][0];$('pageSub').textContent=names[tab][1];if(tab==='settings')$('cfgValue').value='';render();window.scrollTo({top:0})}
 $('nav').addEventListener('click',e=>{let b=e.target.closest('button[data-tab]');if(b)go(b.dataset.tab)});
+$('tabbar').addEventListener('click',e=>{let b=e.target.closest('button[data-tab]');if(b)go(b.dataset.tab)});
 function applyLang(){let en=state.config.language==='en';document.body.classList.toggle('en',en);$('langBtn').textContent=en?'తెలుగు + English':'English only'}
 $('langBtn').onclick=()=>{state.config.language=state.config.language==='en'?'both':'en';save()};
 $('exportBtn').onclick=showBackup;
-$('currentMonth').onchange=e=>{state.config.current=+e.target.value;save()};
-$('collectionMonth').onchange=fillExpected;
+const clampMonth=m=>Math.min(Math.max(1,m),state.config.duration);
+$('heroPrev').onclick=()=>{state.config.current=clampMonth(state.config.current-1);save()};
+$('heroNext').onclick=()=>{state.config.current=clampMonth(state.config.current+1);save()};
+$('colPrev').onclick=()=>{colMonth=clampMonth(colMonth-1);render()};
+$('colNext').onclick=()=>{colMonth=clampMonth(colMonth+1);render()};
+$('collectionMonth').onchange=()=>{fillExpected()};
 $('auctionMonth').onchange=loadAuctionForm;
+$('quickMethod').onchange=e=>{state.config.lastMethod=e.target.value;try{localStorage.setItem(KEY,JSON.stringify(state))}catch(err){}};
+$('collectSearch').addEventListener('input',renderCollect);
+$('collectChips').addEventListener('click',e=>{let b=e.target.closest('.chip');if(!b)return;collectFilter=b.dataset.f;document.querySelectorAll('#collectChips .chip').forEach(c=>c.classList.toggle('on',c===b));renderCollect()});
 ['auctionAmount','auctionRecipients'].forEach(id=>$(id).oninput=()=>{$('auctionTotal').value=fmt((+$('auctionAmount').value||0)*(+$('auctionRecipients').value||0))});
 $('auctionPaid').onchange=()=>{$('partialField').hidden=$('auctionPaid').value!=='partial'};
 $('ledgerMember').onchange=renderLedger;
 ['memberSearch','memberFilter'].forEach(id=>$(id).addEventListener('input',renderMembers));
 ['collectionHistoryMonth','collectionHistorySearch'].forEach(id=>$(id).addEventListener('input',renderCollections));
 
-function fillExpected(){let m=+$('collectionMonth').value||state.config.current;$('collectionAmount').value=monthDue(m)}
-function recordCollection(){let month=+$('collectionMonth').value,memberId=+$('collectionMember').value,amount=+$('collectionAmount').value;if(!memberId||!(amount>0))return info('Check the collection','Select a member and enter an amount greater than zero.');state.collections.push({id:Date.now(),month,memberId,amount,method:$('collectionMethod').value,date:$('collectionDate').value||today(),ref:$('collectionRef').value.trim(),note:$('collectionNote').value.trim()});$('collectionRef').value='';$('collectionNote').value='';save();toast('Collection saved')}
-async function deleteCollection(id){if(await ask('Delete this collection receipt?','Delete')){state.collections=state.collections.filter(x=>x.id!==id);save();toast('Receipt deleted')}}
+/* one-tap collection */
+function quickPay(id,m){m=m||colMonth;let bal=monthDue(m)-memberPaid(id,m);if(bal<=0)return;let rec={id:Date.now()+Math.random(),month:m,memberId:id,amount:bal,method:state.config.lastMethod||'Cash',date:today(),ref:'',note:''};state.collections.push(rec);buzz();save();let mem=state.members.find(x=>x.id===id);toast(`${fmt(bal)} recorded for ${mem?mem.name:'member'}`,'Undo',()=>{state.collections=state.collections.filter(x=>x.id!==rec.id);save()})}
+async function undoMember(id){if(!await ask('Remove all payments recorded for this member in this month?','Remove'))return;state.collections=state.collections.filter(x=>!(x.memberId===id&&x.month===colMonth));save();toast('Payments removed')}
+function mrow(x,m,done,bal,paid){return `<div class="mrow ${done?'done':''}"><div class="avatar">${done?'✓':String(x.id).padStart(2,'0')}</div><div class="minfo"><b>${esc(x.name)}</b><small>${done?'Paid '+fmt(paid):paid?fmt(paid)+' paid · '+fmt(bal)+' left':'Due '+fmt(bal)}</small></div><div class="mact">${done?`<button class="secondary small" onclick="undoMember(${x.id})">Undo</button>`:`<button onclick="quickPay(${x.id},${m})">Mark paid</button>`}</div></div>`}
+function renderCollect(){let m=colMonth,due=monthDue(m),q=($('collectSearch').value||'').toLowerCase();let paidN=state.members.filter(x=>memberPaid(x.id,m)>=due).length,col=collTotal(m),exp=expected(m);$('colMonthLabel').textContent=`Month ${m} of ${state.config.duration}`;$('colSummary').textContent=`${paidN} of ${state.members.length} paid · ${fmt(col)} of ${fmt(exp)}`;$('colBar').style.width=pct(col,exp)+'%';$('colPrev').disabled=m<=1;$('colNext').disabled=m>=state.config.duration;let rows=state.members.filter(x=>(!q||String(x.id)===q||x.name.toLowerCase().includes(q)||(x.phone||'').includes(q))&&(collectFilter==='all'||(collectFilter==='paid')===(memberPaid(x.id,m)>=due)));$('collectList').innerHTML=rows.map(x=>{let p=memberPaid(x.id,m);return mrow(x,m,p>=due,Math.max(0,due-p),p)}).join('')||'<div class="empty">No matching members</div>'}
+function fillExpected(){let m=+$('collectionMonth').value||colMonth;$('collectionAmount').value=monthDue(m)}
+function recordCollection(){let month=+$('collectionMonth').value,memberId=+$('collectionMember').value,amount=+$('collectionAmount').value;if(!memberId||!(amount>0))return info('Check the payment','Select a member and enter an amount greater than zero.');state.collections.push({id:Date.now(),month,memberId,amount,method:$('collectionMethod').value,date:$('collectionDate').value||today(),ref:$('collectionRef').value.trim(),note:$('collectionNote').value.trim()});$('collectionRef').value='';$('collectionNote').value='';save();toast('Payment saved')}
+async function deleteCollection(id){if(await ask('Delete this payment record?','Delete')){state.collections=state.collections.filter(x=>x.id!==id);save();toast('Payment deleted')}}
 function memberForm(title,m){return modal({title,body:`<div class="field"><label for="fName">Name / పేరు</label><input id="fName" value="${esc(m?.name||'')}"></div><div class="field"><label for="fPhone">Phone number (optional)</label><input id="fPhone" inputmode="tel" value="${esc(m?.phone||'')}"></div>`,actions:[{label:'Cancel',cls:'secondary',result:null},{label:'Save',value:()=>({name:$('fName').value.trim(),phone:$('fPhone').value.trim()})}]})}
 async function addMember(){let r=await memberForm('Add member');if(!r||!r.name)return;let id=Math.max(0,...state.members.map(m=>m.id))+1;state.members.push({id,name:r.name,phone:r.phone});state.config.members=state.members.length;save();toast('Member added')}
 async function editMember(id){let m=state.members.find(x=>x.id===id);if(!m)return;let r=await memberForm('Edit member',m);if(!r)return;m.name=r.name||m.name;m.phone=r.phone;save()}
-function renderMembers(){let q=($('memberSearch').value||'').toLowerCase(),filter=$('memberFilter').value,m=state.config.current;let rows=state.members.filter(x=>(String(x.id).includes(q)||x.name.toLowerCase().includes(q)||(x.phone||'').includes(q))&&(filter==='all'||(filter==='paid'?memberPaid(x.id,m)>=monthDue(m):memberPaid(x.id,m)<monthDue(m))));$('memberRows').innerHTML=rows.map(x=>`<tr><td>${x.id}</td><td>${esc(x.name)}</td><td>${esc(x.phone||'—')}</td><td>${fmt(sum(state.collections.filter(c=>c.memberId===x.id).map(c=>+c.amount)))}</td><td>${fmt(Math.max(0,monthDue(m)-memberPaid(x.id,m)))}</td><td><button class="secondary small" onclick="editMember(${x.id})">Edit</button> <button class="secondary small" onclick="openLedger(${x.id})">Ledger</button></td></tr>`).join('')||'<tr><td colspan="6" class="empty">No matching members</td></tr>'}
+function renderMembers(){let q=($('memberSearch').value||'').toLowerCase(),filter=$('memberFilter').value,m=state.config.current;let rows=state.members.filter(x=>(String(x.id).includes(q)||x.name.toLowerCase().includes(q)||(x.phone||'').includes(q))&&(filter==='all'||(filter==='paid'?memberPaid(x.id,m)>=monthDue(m):memberPaid(x.id,m)<monthDue(m))));$('memberRows').innerHTML=rows.map(x=>{let bal=Math.max(0,monthDue(m)-memberPaid(x.id,m));return `<div class="mrow"><div class="avatar">${String(x.id).padStart(2,'0')}</div><div class="minfo"><b>${esc(x.name)}</b><small>${esc(x.phone||'No phone')} · ${bal?'Due '+fmt(bal):'Paid for month '+m}</small></div><div class="mact"><button class="secondary small" onclick="editMember(${x.id})">Edit</button><button class="secondary small" onclick="openLedger(${x.id})">Ledger</button></div></div>`}).join('')||'<div class="empty">No matching members</div>'}
 
 function loadAuctionForm(){let a=auction(+$('auctionMonth').value||state.config.current);$('auctionAmount').value=a.amount||0;$('auctionRecipients').value=a.recipients||0;$('auctionTotal').value=fmt(payout(a.month));$('auctionRecipientIds').value=(a.recipientIds||[]).join(', ');$('auctionDate').value=a.date||'';$('auctionPaid').value=a.paid||'unpaid';$('auctionPaidAmt').value=a.paidAmount||0;$('partialField').hidden=a.paid!=='partial';$('auctionNote').value=a.note||''}
 function clearAuction(){$('auctionAmount').value=0;$('auctionRecipients').value=0;$('auctionTotal').value=fmt(0);$('auctionRecipientIds').value='';$('auctionDate').value='';$('auctionPaid').value='unpaid';$('auctionPaidAmt').value=0;$('partialField').hidden=true;$('auctionNote').value=''}
 function saveAuction(){let m=+$('auctionMonth').value,amount=+$('auctionAmount').value,recipients=+$('auctionRecipients').value;if(amount<0||recipients<0||recipients>state.members.length||!Number.isInteger(recipients))return info('Check the auction','Check the auction amount and recipient count.');let ids=$('auctionRecipientIds').value.split(',').map(x=>parseInt(x.trim(),10)).filter(Number.isFinite);if(ids.some(id=>!state.members.some(x=>x.id===id)))return info('Check the auction','One or more recipient IDs do not exist.');if(ids.length&&ids.length!==recipients)return info('Check the auction','The number of recipient IDs should match the recipient count, or leave the IDs blank.');let a={month:m,amount,recipients,recipientIds:ids,date:$('auctionDate').value,paid:$('auctionPaid').value,paidAmount:+$('auctionPaidAmt').value||0,note:$('auctionNote').value.trim()};let idx=state.auctions.findIndex(x=>x.month===m);if(idx>=0)state.auctions[idx]=a;else state.auctions.push(a);save();toast('Auction saved')}
 async function markAuctionPaid(m){if(!await ask(`Mark Month ${m} payout of ${fmt(payout(m))} as paid in full?`,'Mark paid'))return;let a=auction(m);if(!state.auctions.includes(a))state.auctions.push(a);a.paid='paid';a.date=a.date||today();save()}
-function renderAuctions(){$('auctionRows').innerHTML=state.auctions.slice().sort((a,b)=>a.month-b.month).map(a=>`<tr><td>${a.month}</td><td>${fmt(monthDue(a.month))}</td><td>${fmt(expected(a.month))}</td><td>${fmt(a.amount)}</td><td>${a.recipients}</td><td>${fmt(payout(a.month))}</td><td>${fmt(paidOut(a.month))}</td><td><span class="pill ${a.paid==='paid'?'ok':a.paid==='partial'?'warn':'bad'}">${a.paid==='paid'?'Paid':a.paid==='partial'?'Partial':'Unpaid'}</span></td><td><button class="secondary small" onclick="editAuction(${a.month})">Edit</button> ${a.paid!=='paid'?`<button class="small" onclick="markAuctionPaid(${a.month})">Mark paid</button>`:''}</td></tr>`).join('')}
+function renderAuctions(){$('auctionRows').innerHTML=state.auctions.slice().sort((a,b)=>a.month-b.month).map(a=>`<tr><td data-label="Month">${a.month}</td><td data-label="Contribution">${fmt(monthDue(a.month))}</td><td data-label="Expected">${fmt(expected(a.month))}</td><td data-label="Auction/recipient">${fmt(a.amount)}</td><td data-label="Recipients">${a.recipients}</td><td data-label="Total payout">${fmt(payout(a.month))}</td><td data-label="Recorded payout">${fmt(paidOut(a.month))}</td><td data-label="Status"><span class="pill ${a.paid==='paid'?'ok':a.paid==='partial'?'warn':'bad'}">${a.paid==='paid'?'Paid':a.paid==='partial'?'Partial':'Unpaid'}</span></td><td class="act"><button class="secondary small" onclick="editAuction(${a.month})">Edit</button> ${a.paid!=='paid'?`<button class="small" onclick="markAuctionPaid(${a.month})">Mark paid</button>`:''}</td></tr>`).join('')}
 function editAuction(m){go('auctions');$('auctionMonth').value=m;loadAuctionForm()}
 function openLedger(id){go('ledger');$('ledgerMember').value=id;renderLedger()}
 
 function renderLedger(){let id=+$('ledgerMember').value,m=state.members.find(x=>x.id===id);if(!m){$('ledgerSummary').innerHTML='';$('ledgerRows').innerHTML='';return}let totalDue=sum(Array.from({length:state.config.duration},(_,i)=>monthDue(i+1))),paid=sum(state.collections.filter(x=>x.memberId===id).map(x=>+x.amount)),due=totalDue-paid,received=sum(state.auctions.filter(a=>(a.recipientIds||[]).includes(id)).map(a=>payout(a.month)));$('ledgerSummary').innerHTML=`<div class="stats" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))"><div class="stat"><label>Member</label><strong style="font-size:18px">${esc(m.name)}</strong><small>ID ${m.id} · ${esc(m.phone||'No phone')}</small></div><div class="stat"><label>Total paid</label><strong>${fmt(paid)}</strong><small>All saved receipts</small></div><div class="stat"><label>Calculated balance due</label><strong>${fmt(Math.max(0,due))}</strong><small>Expected contributions minus paid</small></div></div>`;$('ledgerRows').innerHTML=Array.from({length:state.config.duration},(_,i)=>{let n=i+1,cs=state.collections.filter(x=>x.memberId===id&&x.month===n),p=sum(cs.map(x=>+x.amount)),win=(auction(n).recipientIds||[]).includes(id);return `<tr><td>${n}</td><td>${fmt(monthDue(n))}</td><td>${fmt(p)}</td><td>${fmt(Math.max(0,monthDue(n)-p))}</td><td>${cs.map(x=>`${esc(x.date)} ${esc(x.method)} ${esc(x.ref)}`).join('<br>')||'—'}</td><td>${win?fmt(payout(n)):'—'}</td></tr>`}).join('')+`<tr><th>Total</th><th>${fmt(totalDue)}</th><th>${fmt(paid)}</th><th>${fmt(Math.max(0,due))}</th><th></th><th>${fmt(received)}</th></tr>`}
-function renderCollections(){let mon=$('collectionHistoryMonth').value,q=($('collectionHistorySearch').value||'').toLowerCase(),list=state.collections.filter(c=>(mon==='all'||c.month===+mon)&&((state.members.find(m=>m.id===c.memberId)?.name||'').toLowerCase().includes(q)||String(c.ref||'').toLowerCase().includes(q)||String(c.memberId).includes(q))).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);$('collectionCount').textContent=`${list.length} receipt(s)`;$('collectionRows').innerHTML=list.map(c=>`<tr><td>${esc(c.date)}</td><td>${c.month}</td><td>${esc(state.members.find(m=>m.id===c.memberId)?.name||'Unknown')} (#${c.memberId})</td><td>${fmt(c.amount)}</td><td>${esc(c.method)}</td><td>${esc(c.ref||'—')}</td><td><button class="danger small" onclick="deleteCollection(${c.id})">Delete</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">No collections recorded yet. Use the form above to add the first receipt.</td></tr>'}
-function renderDashboard(){let m=state.config.current,paidCount=state.members.filter(x=>memberPaid(x.id,m)>=monthDue(m)).length,totalCollected=sum(state.collections.map(x=>+x.amount)),totalPaid=state.auctions.reduce((s,a)=>s+paidOut(a.month),0),net=totalCollected-totalPaid,dues=sum(Array.from({length:state.config.duration},(_,i)=>state.members.reduce((s,mem)=>s+Math.max(0,monthDue(i+1)-memberPaid(mem.id,i+1)),0)));$('sMembers').textContent=state.members.length;$('sMembersSub').textContent=`of ${state.config.members} configured seats`;$('sExpected').textContent=fmt(expected(m));$('sExpectedSub').textContent=`Month ${m} · ${fmt(monthDue(m))} per member`;$('sCollected').textContent=fmt(totalCollected);$('sCollectionSub').textContent=`${state.collections.length} receipt(s) recorded`;$('sPaid').textContent=fmt(totalPaid);$('sPaidSub').textContent='Auctions marked paid';$('monthRegular').value=fmt(monthDue(m));$('monthExpected').value=fmt(expected(m));$('paidMembers').value=`${paidCount} / ${state.members.length}`;$('monthStatus').textContent=paidCount===state.members.length&&paidCount?'Collected in full':paidCount?'Partially collected':'Not closed';$('monthStatus').className='pill '+(paidCount===state.members.length&&paidCount?'ok':paidCount?'warn':'bad');$('netCash').textContent=fmt(net);$('dues').textContent=fmt(dues);$('reconText').textContent=`Collected ${fmt(totalCollected)} − recorded paid-out ${fmt(totalPaid)} = ${fmt(net)} net recorded cash. Compare this with actual cash and bank balances and organizer fees.`;$('overviewRows').innerHTML=state.auctions.map(a=>{let c=collTotal(a.month),e=expected(a.month);return `<tr><td>${a.month}</td><td>${fmt(e)}</td><td>${fmt(c)}</td><td>${fmt(a.amount)}</td><td>${a.recipients}</td><td>${fmt(payout(a.month))}</td><td><span class="pill ${c>=e?'ok':c?'warn':'bad'}">${c>=e?'Collected':c?'Partial':'Pending'}</span></td></tr>`}).join('')}
+function renderCollections(){let mon=$('collectionHistoryMonth').value,q=($('collectionHistorySearch').value||'').toLowerCase(),list=state.collections.filter(c=>(mon==='all'||c.month===+mon)&&((state.members.find(m=>m.id===c.memberId)?.name||'').toLowerCase().includes(q)||String(c.ref||'').toLowerCase().includes(q)||String(c.memberId).includes(q))).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||b.id-a.id);$('collectionCount').textContent=`${list.length} payment(s)`;$('collectionRows').innerHTML=list.map(c=>`<tr><td data-label="Date">${esc(c.date)}</td><td data-label="Month">${c.month}</td><td data-label="Member">${esc(state.members.find(m=>m.id===c.memberId)?.name||'Unknown')} (#${c.memberId})</td><td data-label="Amount">${fmt(c.amount)}</td><td data-label="Method">${esc(c.method)}</td><td data-label="Reference">${esc(c.ref||'—')}</td><td class="act"><button class="danger small" onclick="deleteCollection(${c.id})">Delete</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">No payments yet. Tap "Mark paid" next to a member to record the first one.</td></tr>'}
+function renderDashboard(){let m=state.config.current,due=monthDue(m),exp=expected(m),col=collTotal(m),paidCount=state.members.filter(x=>memberPaid(x.id,m)>=due).length,totalCollected=sum(state.collections.map(x=>+x.amount)),totalPaid=state.auctions.reduce((s,a)=>s+paidOut(a.month),0),net=totalCollected-totalPaid,dues=sum(Array.from({length:state.config.duration},(_,i)=>state.members.reduce((s,mem)=>s+Math.max(0,monthDue(i+1)-memberPaid(mem.id,i+1)),0)));
+$('heroMonth').textContent=`Month ${m} of ${state.config.duration}`;$('heroPrev').disabled=m<=1;$('heroNext').disabled=m>=state.config.duration;$('heroCollected').textContent=fmt(col);$('heroOf').textContent=`collected of ${fmt(exp)} expected · ${fmt(due)} per member`;$('heroBar').style.width=pct(col,exp)+'%';$('heroPaid').textContent=`${paidCount} of ${state.members.length} members paid`;$('heroLeft').textContent=`${fmt(Math.max(0,exp-col))} to collect`;
+let full=paidCount===state.members.length&&paidCount>0;$('monthStatus').textContent=full?'Collected in full':paidCount?'In progress':'Not started';$('monthStatus').className='pill '+(full?'ok':paidCount?'warn':'bad');
+$('sMembers').textContent=state.members.length;$('sMembersSub').textContent=`of ${state.config.members} seats`;$('sPaid').textContent=fmt(totalPaid);$('sPaidSub').textContent='Auctions marked paid';$('netCash').textContent=fmt(net);$('dues').textContent=fmt(dues);$('sCollectionSub').textContent=`${state.collections.length} payment(s) recorded`;
+let unpaid=state.members.filter(x=>memberPaid(x.id,m)<due);$('dashUnpaid').innerHTML=unpaid.slice(0,5).map(x=>{let p=memberPaid(x.id,m);return mrow(x,m,false,due-p,p)}).join('')+(unpaid.length>5?`<button class="ghost" onclick="go('collections')">+ ${unpaid.length-5} more</button>`:'')||'<div class="empty">Everyone has paid for this month 🎉</div>';
+$('reconText').textContent=`Collected ${fmt(totalCollected)} − paid out ${fmt(totalPaid)} = ${fmt(net)} net recorded cash. Compare this with actual cash and bank balances and organizer fees.`;
+$('overviewRows').innerHTML=state.auctions.map(a=>{let c=collTotal(a.month),e=expected(a.month);return `<tr><td data-label="Month">${a.month}</td><td data-label="Expected">${fmt(e)}</td><td data-label="Collected">${fmt(c)}</td><td data-label="Auction / recipient">${fmt(a.amount)}</td><td data-label="Recipients">${a.recipients}</td><td data-label="Total payout">${fmt(payout(a.month))}</td><td data-label="Status"><span class="pill ${c>=e?'ok':c?'warn':'bad'}">${c>=e?'Collected':c?'Partial':'Pending'}</span></td></tr>`}).join('')}
 function renderReports(){let totalExpected=sum(Array.from({length:state.config.duration},(_,i)=>expected(i+1))),col=sum(state.collections.map(x=>+x.amount)),scheduled=state.auctions.reduce((s,a)=>s+payout(a.month),0),paid=state.auctions.reduce((s,a)=>s+paidOut(a.month),0);$('rExpected').textContent=fmt(totalExpected);$('rExpectedSub').textContent=`Across all ${state.config.duration} months`;$('rCollected').textContent=fmt(col);$('rScheduled').textContent=fmt(scheduled);$('rPaid').textContent=fmt(paid);$('reportRows').innerHTML=state.auctions.map(a=>{let c=collTotal(a.month),p=paidOut(a.month);return `<tr><td>${a.month}</td><td>${fmt(monthDue(a.month))}</td><td>${fmt(expected(a.month))}</td><td>${fmt(c)}</td><td>${fmt(c-expected(a.month))}</td><td>${fmt(payout(a.month))}</td><td>${fmt(p)}</td><td>${fmt(c-p)}</td></tr>`}).join('');let issues=[],recTotal=state.auctions.reduce((s,a)=>s+a.recipients,0);if(state.members.length!==state.config.members)issues.push(`Configured member count is ${state.config.members}, but ${state.members.length} members are registered.`);if(recTotal!==state.members.length)issues.push(`Recipient count totals ${recTotal} across all months; registered members: ${state.members.length}. Verify each member's payout schedule.`);state.auctions.forEach(a=>{if((a.recipientIds||[]).length&&a.recipientIds.length!==a.recipients)issues.push(`Month ${a.month}: recipient IDs do not match recipient count.`);if(a.recipients>state.members.length)issues.push(`Month ${a.month}: recipients exceed registered members.`)});issues.push(`Contribution schedule total ${fmt(totalExpected)} minus scheduled payouts ${fmt(scheduled)} = ${fmt(totalExpected-scheduled)}. This is not automatically profit; add approved commission and expenses and verify chit rules.`);issues.push(`Collections recorded: ${fmt(col)}. Scheduled contributions: ${fmt(totalExpected)}. Outstanding (aggregate): ${fmt(Math.max(0,totalExpected-col))}; this ignores overpayments by individual members.`);$('reconChecks').innerHTML=issues.map(x=>`<div class="notice">${esc(x)}</div>`).join('')}
-function render(){applyLang();fillSelects();renderDashboard();renderMembers();renderCollections();renderAuctions();renderLedger();renderReports();loadAuctionForm();if(!$('collectionAmount').value||currentTab!=='collections')fillExpected()}
+function render(){state.config.current=clampMonth(state.config.current||1);if(colMonth==null)colMonth=state.config.current;colMonth=clampMonth(colMonth);applyLang();fillSelects();renderDashboard();renderCollect();renderMembers();renderCollections();renderAuctions();renderLedger();renderReports();loadAuctionForm();fillExpected()}
 
-async function saveSettings(){let c={value:+$('cfgValue').value,members:+$('cfgMembers').value,duration:+$('cfgDuration').value,regular:+$('cfgRegular').value,final:+$('cfgFinal').value,current:+$('cfgCurrent').value,organizer:$('cfgOrganizer').value.trim(),language:state.config.language};if(!c.members||c.members<1||c.members>200||!c.duration||c.duration<1||c.duration>120||c.regular<0||c.final<0)return info('Check configuration','Some configuration values are out of range.');if((c.members!==state.config.members||c.duration!==state.config.duration)&&!await ask('Changing member count or duration can affect your schedule. Continue?'))return;let old=state.config;state.config=c;while(state.members.length<c.members){let id=Math.max(0,...state.members.map(x=>x.id))+1;state.members.push({id,name:'Member '+String(id).padStart(2,'0'),phone:''})}if(state.members.length>c.members){let removed=state.members.slice(c.members);if(removed.some(m=>state.collections.some(x=>x.memberId===m.id))){state.config=old;return info('Cannot reduce members','Removed members still have receipts. Delete those receipts first.')}state.members=state.members.slice(0,c.members)}state.auctions=Array.from({length:c.duration},(_,i)=>state.auctions.find(a=>a.month===i+1)||({month:i+1,amount:0,recipients:0,recipientIds:[],date:'',paid:'unpaid',paidAmount:0,note:''}));state.config.current=Math.min(c.current||1,c.duration);save();toast('Configuration saved')}
-async function resetDemo(){if(!await ask('Reset all members, receipts and auction entries to the starter data? Copy a backup first if needed.','Reset'))return;state=seed();save();toast('Starter data restored')}
-async function wipeData(){if(!await ask('Permanently delete all locally saved chit data from this browser?','Delete everything'))return;try{localStorage.removeItem(KEY)}catch(e){}state=seed();save();toast('All data deleted')}
-function showBackup(){return showText('Backup',JSON.stringify(state,null,2),'Copy this text and keep it somewhere safe. Use "Restore from pasted backup" in Chit setup to load it again.')}
-function applyImport(text){try{let d=JSON.parse(text);if(!d.config||!d.members||!d.auctions||!d.collections)throw Error();state=d;save();toast('Backup restored');return true}catch(e){info('Invalid backup','That text is not a valid Chit Organizer backup.');return false}}
+async function saveSettings(){let c={value:+$('cfgValue').value,members:+$('cfgMembers').value,duration:+$('cfgDuration').value,regular:+$('cfgRegular').value,final:+$('cfgFinal').value,current:+$('cfgCurrent').value,organizer:$('cfgOrganizer').value.trim(),language:state.config.language,lastMethod:state.config.lastMethod};if(!c.members||c.members<1||c.members>200||!c.duration||c.duration<1||c.duration>120||c.regular<0||c.final<0)return info('Check configuration','Some configuration values are out of range.');if((c.members!==state.config.members||c.duration!==state.config.duration)&&!await ask('Changing member count or duration can affect your schedule. Continue?'))return;let old=state.config;state.config=c;while(state.members.length<c.members){let id=Math.max(0,...state.members.map(x=>x.id))+1;state.members.push({id,name:'Member '+String(id).padStart(2,'0'),phone:''})}if(state.members.length>c.members){let removed=state.members.slice(c.members);if(removed.some(m=>state.collections.some(x=>x.memberId===m.id))){state.config=old;return info('Cannot reduce members','Removed members still have receipts. Delete those receipts first.')}state.members=state.members.slice(0,c.members)}state.auctions=Array.from({length:c.duration},(_,i)=>state.auctions.find(a=>a.month===i+1)||({month:i+1,amount:0,recipients:0,recipientIds:[],date:'',paid:'unpaid',paidAmount:0,note:''}));state.config.current=Math.min(c.current||1,c.duration);save();toast('Configuration saved')}
+async function resetDemo(){if(!await ask('Reset all members, receipts and auction entries to the starter data? Copy a backup first if needed.','Reset'))return;state=seed();colMonth=1;save();toast('Starter data restored')}
+async function wipeData(){if(!await ask('Permanently delete all locally saved chit data from this device?','Delete everything'))return;try{localStorage.removeItem(KEY)}catch(e){}state=seed();colMonth=1;save();toast('All data deleted')}
+function showBackup(){return showText('Backup',JSON.stringify(state,null,2),'Copy this text and keep it somewhere safe, such as a note to yourself. Use "Restore from pasted backup" in Chit setup to load it again.')}
+function applyImport(text){try{let d=JSON.parse(text);if(!d.config||!d.members||!d.auctions||!d.collections)throw Error();state=d;colMonth=null;save();toast('Backup restored');return true}catch(e){info('Invalid backup','That text is not a valid Chit Organizer backup.');return false}}
 async function importPaste(){let r=await modal({title:'Restore from pasted backup',body:'<p class="muted">This replaces all current data.</p><textarea id="fPaste" placeholder="Paste backup text here"></textarea>',actions:[{label:'Cancel',cls:'secondary',result:null},{label:'Restore',value:()=>$('fPaste').value.trim()}]});if(r)applyImport(r)}
 $('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{applyImport(await f.text())}catch(err){info('Could not read file','Try pasting the backup text instead.')}e.target.value=''};
 function showCSV(){let rows=[['Month','Contribution per member','Expected collection','Collected','Variance','Auction amount per recipient','Recipients','Scheduled payout','Paid out']];state.auctions.forEach(a=>rows.push([a.month,monthDue(a.month),expected(a.month),collTotal(a.month),collTotal(a.month)-expected(a.month),a.amount,a.recipients,payout(a.month),paidOut(a.month)]));let csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');showText('Monthly report (CSV)',csv,'Copy and paste into a spreadsheet.')}
-render();
+go('dashboard');
 </script>
 <script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
 </body>
